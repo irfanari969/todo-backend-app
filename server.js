@@ -5,11 +5,6 @@ const cors = require('cors')
 const app = express()
 const port = process.env.PORT || 3000
 
-app.listen(port, () => {
-    console.log(`Server berjalan di port ${port}`);
-})
-
-
 app.use(cors())
 app.use(express.json())
 
@@ -23,8 +18,11 @@ const db = mysql.createConnection({
 })
 
 db.connect(err => {
-    if (err) console.log('Error koneksi DB:', err)
-    else console.log('Terkoneksi ke MySQL!')
+if (err) {
+console.error('Database connection error:', err)
+return
+}
+console.log('Terkoneksi ke MySQL!')
 })
 
 // --- ROUTES (API) ---
@@ -87,5 +85,5 @@ app.delete('/tasks/:id', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Server berjalan di http://localhost:${port}`)
+    console.log(`Server berjalan di port ${port}`);
 })
